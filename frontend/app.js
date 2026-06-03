@@ -58,8 +58,8 @@ function renderResults(results) {
       <div class="rank">${idx + 1}</div>
       <div>
         <p class="result-title">SKU ${item.sku}</p>
-        <p class="meta">Category ${item.category} · price bucket ${item.price} · ${item.was_validation_target ? "validation target" : "candidate"}</p>
-        <p class="why">category match: ${item.explanation.category_match} · price affinity: ${item.explanation.price_affinity.toFixed(3)} · query overlap: ${item.explanation.query_name_overlap.toFixed(3)}</p>
+        <p class="meta">Category ${item.category} · price ${item.price} · ${item.was_validation_target ? "validation target" : "candidate"}</p>
+        <p class="why">match ${item.explanation.category_match ? "category" : "profile"} · price ${item.explanation.price_affinity.toFixed(3)} · token overlap ${item.explanation.query_name_overlap.toFixed(3)}</p>
       </div>
       <div class="score">${item.score.toFixed(3)}</div>
     </article>
