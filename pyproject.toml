@@ -1,5 +1,5 @@
 [project]
-name = "recsys-2025-personalization"
+name = "personalization-recsys"
 version = "0.1.0"
 description = "Behavior-aware retail personalization and ranking with the RecSys Challenge 2025 Synerise dataset."
 readme = "README.md"
@@ -43,4 +43,3 @@ pythonpath = ["src"]
 [tool.ruff]
 line-length = 100
 target-version = "py314"
-

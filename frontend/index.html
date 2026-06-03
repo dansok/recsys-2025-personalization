@@ -23,7 +23,7 @@
         <div class="side-links">
           <a href="https://github.com/dansok/recsys-2025-personalization">GitHub repository</a>
           <a href="http://localhost:5002">Local MLflow UI</a>
-          <a href="http://localhost:8124/play">Local ClickHouse UI</a>
+          <a href="http://localhost:8124/play?theme=dark">Local ClickHouse UI</a>
         </div>
       </aside>
 
@@ -111,7 +111,7 @@
             </div>
           </section>
           <section class="block">
-            <pre><code>docker compose up -d mlflow
+            <pre><code>make start
 open http://localhost:5002</code></pre>
           </section>
         </article>
@@ -124,14 +124,14 @@ open http://localhost:5002</code></pre>
               GitHub Pages cannot host it, so the project keeps it in Docker for reproducible local runs.
             </p>
             <div class="actions">
-              <a class="button" href="http://localhost:8124/play">Open local ClickHouse UI</a>
+              <a class="button" href="http://localhost:8124/play?theme=dark">Open local ClickHouse UI</a>
               <a class="button secondary" href="https://clickhouse.com/docs">ClickHouse docs</a>
             </div>
           </section>
           <section class="block">
-            <pre><code>docker compose up -d clickhouse
+            <pre><code>make start
 .venv/bin/recsys schema apply
-open http://localhost:8124/play</code></pre>
+open "http://localhost:8124/play?theme=dark"</code></pre>
           </section>
         </article>
 
@@ -159,4 +159,3 @@ open http://localhost:8124/play</code></pre>
     <script src="/static/app.js"></script>
   </body>
 </html>
-

@@ -44,8 +44,83 @@ Metrics:
 ```bash
 make install
 cp .env.example .env
-docker compose up -d clickhouse mlflow
-recsys schema apply
+make start
+.venv/bin/recsys schema apply
+```
+
+MLflow UI: [http://localhost:5002](http://localhost:5002)
+
+ClickHouse UI: [http://localhost:8124/play?theme=dark](http://localhost:8124/play?theme=dark)
+
+ClickHouse HTTP API: [http://localhost:8124](http://localhost:8124)
+
+`make start` starts the local Docker services, waits for MLflow and ClickHouse, prints the UI URLs, and opens both browser tabs on macOS. Use `OPEN_UI=0 make start` if you want to start services without opening browser tabs. Use `make open-uis` to reopen the local UI tabs later.
+
+### ClickHouse UI Queries
+
+The ClickHouse browser UI may default to a database other than `recsys2025`, so prefer fully qualified table names:
+
+```sql
+SHOW TABLES FROM recsys2025;
+```
+
+```sql
+SELECT
+    name,
+    total_rows,
+    formatReadableSize(total_bytes) AS size
+FROM system.tables
+WHERE database = 'recsys2025'
+ORDER BY total_bytes DESC;
+```
+
+```sql
+SELECT
+    event_type,
+    count() AS events,
+    uniqExact(client_id) AS users,
+    uniqExact(sku) AS products,
+    min(timestamp) AS first_seen,
+    max(timestamp) AS last_seen
+FROM recsys2025.product_events
+GROUP BY event_type
+ORDER BY events DESC;
+```
+
+```sql
+SELECT
+    category,
+    count() AS products,
+    min(price) AS min_price_bucket,
+    max(price) AS max_price_bucket,
+    avg(price) AS avg_price_bucket
+FROM recsys2025.product_properties
+GROUP BY category
+ORDER BY products DESC
+LIMIT 25;
+```
+
+```sql
+SELECT
+    client_id,
+    count() AS searches,
+    anyLast(query) AS latest_query
+FROM recsys2025.search_queries
+GROUP BY client_id
+ORDER BY searches DESC
+LIMIT 25;
+```
+
+```sql
+SELECT
+    feature_set,
+    count() AS users,
+    avg(buy_count) AS avg_buys,
+    avg(search_count) AS avg_searches,
+    avg(unique_categories) AS avg_categories
+FROM recsys2025.user_features
+GROUP BY feature_set
+ORDER BY users DESC;
 ```
 
 Download the preprocessed challenge dataset:

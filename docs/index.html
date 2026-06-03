@@ -329,7 +329,7 @@
           <a href="https://github.com/dansok/recsys-2025-personalization">GitHub repository</a>
           <a href="http://localhost:8010">Local search app</a>
           <a href="http://localhost:5002">Local MLflow UI</a>
-          <a href="http://localhost:8124/play">Local ClickHouse UI</a>
+          <a href="http://localhost:8124/play?theme=dark">Local ClickHouse UI</a>
         </div>
       </aside>
 
@@ -418,7 +418,7 @@
 
           <section class="block">
             <h3>Run Locally</h3>
-            <pre><code>cd /Users/dsokolsky/PycharmProjects/recsys-2025-personalization
+            <pre><code>cd /Users/dsokolsky/PycharmProjects/personalization-recsys
 .venv/bin/uvicorn recsys_personalization.api:app --reload --port 8010</code></pre>
             <p class="note">
               <strong>Hosted page limitation:</strong> GitHub Pages is static, so this tab links to the local FastAPI app.
@@ -442,7 +442,7 @@
 
           <section class="block">
             <h3>Local Startup</h3>
-            <pre><code>docker compose up -d mlflow
+            <pre><code>make start
 open http://localhost:5002</code></pre>
           </section>
 
@@ -463,16 +463,16 @@ open http://localhost:5002</code></pre>
               pipeline. It is intentionally local-first because the public demo does not need arbitrary database queries.
             </p>
             <div class="actions">
-              <a class="button" href="http://localhost:8124/play">Open local ClickHouse UI</a>
+              <a class="button" href="http://localhost:8124/play?theme=dark">Open local ClickHouse UI</a>
               <a class="button secondary" href="https://clickhouse.com/docs">ClickHouse docs</a>
             </div>
           </section>
 
           <section class="block">
             <h3>Local Startup</h3>
-            <pre><code>docker compose up -d clickhouse
+            <pre><code>make start
 .venv/bin/recsys schema apply
-open http://localhost:8124/play</code></pre>
+open "http://localhost:8124/play?theme=dark"</code></pre>
           </section>
 
           <section class="block">
@@ -559,4 +559,3 @@ open http://localhost:8124/play</code></pre>
     </script>
   </body>
 </html>
-
