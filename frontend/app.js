@@ -2,9 +2,26 @@ const healthEl = document.querySelector("#health");
 const personaEl = document.querySelector("#persona");
 const profileEl = document.querySelector("#profile");
 const queryEl = document.querySelector("#query");
-const searchEl = document.querySelector("#search");
+const searchEl = document.querySelector("#search-button");
 const resultsEl = document.querySelector("#results");
 const latencyEl = document.querySelector("#latency");
+const tabControls = [...document.querySelectorAll(".tab-button, .tab-link")];
+const panels = [...document.querySelectorAll(".tab-panel")];
+
+function activateTab(tabId) {
+  panels.forEach((panel) => panel.classList.toggle("active", panel.id === tabId));
+  document.querySelectorAll(".tab-button").forEach((button) => {
+    button.classList.toggle("active", button.dataset.tab === tabId);
+  });
+  history.replaceState(null, "", `#${tabId}`);
+}
+
+tabControls.forEach((button) => {
+  button.addEventListener("click", () => activateTab(button.dataset.tab));
+});
+
+const initialTab = location.hash.replace("#", "");
+if (initialTab && document.getElementById(initialTab)) activateTab(initialTab);
 
 async function getJson(url) {
   const response = await fetch(url);

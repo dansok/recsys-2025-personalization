@@ -7,43 +7,155 @@
     <link rel="stylesheet" href="/static/styles.css" />
   </head>
   <body>
-    <main class="shell">
-      <header class="topbar">
-        <div>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
           <p class="eyebrow">RecSys 2025 Synerise</p>
-          <h1>Personalized retail search</h1>
+          <h1>Personalization Workbench</h1>
         </div>
-        <div id="health" class="pill">Checking API</div>
-      </header>
-
-      <section class="controls">
-        <label for="persona">Assume validation user</label>
-        <select id="persona"></select>
-
-        <label for="query">Search / filter</label>
-        <div class="search-row">
-          <input id="query" placeholder="Try: category:3398, sku:52586, or encoded tokens like 195 15 86" />
-          <button id="search">Search</button>
+        <nav class="tab-list" aria-label="Project sections">
+          <button class="tab-button active" data-tab="landing">Overview</button>
+          <button class="tab-button" data-tab="search">Search Engine</button>
+          <button class="tab-button" data-tab="mlflow">MLflow</button>
+          <button class="tab-button" data-tab="clickhouse">ClickHouse</button>
+          <button class="tab-button" data-tab="architecture">Architecture</button>
+        </nav>
+        <div class="side-links">
+          <a href="https://github.com/dansok/recsys-2025-personalization">GitHub repository</a>
+          <a href="http://localhost:5002">Local MLflow UI</a>
+          <a href="http://localhost:8124/play">Local ClickHouse UI</a>
         </div>
-        <p class="hint">
-          Product names and search queries are anonymized numeric-token strings. Personalization comes from the selected validation user's history, category affinity, and price profile.
-        </p>
-      </section>
+      </aside>
 
-      <section class="layout">
-        <aside class="profile">
-          <h2>Role profile</h2>
-          <dl id="profile"></dl>
-        </aside>
-        <section class="results">
-          <div class="results-header">
-            <h2>Ranked products</h2>
-            <span id="latency"></span>
-          </div>
-          <div id="results"></div>
-        </section>
-      </section>
-    </main>
+      <main class="content">
+        <article id="landing" class="tab-panel active">
+          <section class="hero">
+            <div>
+              <p class="eyebrow">Behavior-aware retail ranking</p>
+              <h2>Learning user preferences from anonymized commerce events</h2>
+              <p class="lede">
+                This local app demonstrates the project end to end: validation-user personas, personalized product ranking,
+                infrastructure links, and the path toward model comparisons.
+              </p>
+              <div class="actions">
+                <button class="button secondary tab-link" data-tab="search">Open search engine</button>
+                <a class="button" href="https://dansok.github.io/recsys-2025-personalization/">Hosted writeup</a>
+              </div>
+            </div>
+          </section>
+
+          <section class="block">
+            <h3>Dataset Signals</h3>
+            <p>
+              RecSys 2025 contains event histories and validation targets, so it supports personalization rather than only
+              generic relevance ranking.
+            </p>
+            <div>
+              <span class="metric">156M page visits</span>
+              <span class="metric">10.2M searches</span>
+              <span class="metric">5.7M add-to-cart</span>
+              <span class="metric">1.8M purchases</span>
+              <span class="metric">1.26M products</span>
+            </div>
+          </section>
+        </article>
+
+        <article id="search" class="tab-panel">
+          <header class="topbar">
+            <div>
+              <p class="eyebrow">Live local demo</p>
+              <h2>Personalized Search Engine</h2>
+            </div>
+            <div id="health" class="pill">Checking API</div>
+          </header>
+
+          <section class="controls">
+            <label for="persona">Assume validation user</label>
+            <select id="persona"></select>
+
+            <label for="query">Search / filter</label>
+            <div class="search-row">
+              <input id="query" placeholder="Try: category:3398, sku:52586, or encoded tokens like 195 15 86" />
+              <button id="search-button">Search</button>
+            </div>
+            <p class="hint">
+              Product names and search queries are anonymized numeric-token strings. Personalization comes from the selected validation user's history, category affinity, and price profile.
+            </p>
+          </section>
+
+          <section class="layout">
+            <aside class="profile">
+              <h3>Role profile</h3>
+              <dl id="profile"></dl>
+            </aside>
+            <section class="results">
+              <div class="results-header">
+                <h3>Ranked products</h3>
+                <span id="latency"></span>
+              </div>
+              <div id="results"></div>
+            </section>
+          </section>
+        </article>
+
+        <article id="mlflow" class="tab-panel">
+          <section class="block">
+            <h2>MLflow</h2>
+            <p>
+              MLflow tracks model parameters, metrics, and artifacts. The local Docker service is configured on port
+              <code>5002</code>.
+            </p>
+            <div class="actions">
+              <a class="button" href="http://localhost:5002">Open local MLflow UI</a>
+              <a class="button secondary" href="https://dagshub.com/docs/integration_guide/mlflow_tracking/">Hosted MLflow option</a>
+            </div>
+          </section>
+          <section class="block">
+            <pre><code>docker compose up -d mlflow
+open http://localhost:5002</code></pre>
+          </section>
+        </article>
+
+        <article id="clickhouse" class="tab-panel">
+          <section class="block">
+            <h2>ClickHouse</h2>
+            <p>
+              ClickHouse is the local analytical store for event data, features, predictions, and evaluation outputs.
+              GitHub Pages cannot host it, so the project keeps it in Docker for reproducible local runs.
+            </p>
+            <div class="actions">
+              <a class="button" href="http://localhost:8124/play">Open local ClickHouse UI</a>
+              <a class="button secondary" href="https://clickhouse.com/docs">ClickHouse docs</a>
+            </div>
+          </section>
+          <section class="block">
+            <pre><code>docker compose up -d clickhouse
+.venv/bin/recsys schema apply
+open http://localhost:8124/play</code></pre>
+          </section>
+        </article>
+
+        <article id="architecture" class="tab-panel">
+          <section class="block">
+            <h2>Architecture</h2>
+            <div class="grid">
+              <div class="card">
+                <h3>Raw data</h3>
+                <p>RecSys parquet event files and target labels under <code>data/raw</code>.</p>
+              </div>
+              <div class="card">
+                <h3>Processing</h3>
+                <p>Polars builds user profiles and future model features from event history.</p>
+              </div>
+              <div class="card">
+                <h3>Serving</h3>
+                <p>FastAPI powers the live local personalized search interface.</p>
+              </div>
+            </div>
+          </section>
+        </article>
+      </main>
+    </div>
     <script src="/static/app.js"></script>
   </body>
 </html>
