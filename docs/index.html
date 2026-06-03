@@ -15,65 +15,159 @@
         --accent: #087f78;
         --accent-dark: #055f5a;
         --soft: #e7f2ef;
+        --code: #1d2522;
       }
 
       * { box-sizing: border-box; }
 
       body {
         margin: 0;
+        min-height: 100vh;
         background: var(--bg);
         color: var(--ink);
         font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
 
-      main {
-        width: min(1120px, calc(100vw - 40px));
-        margin: 0 auto;
+      .app {
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        min-height: 100vh;
       }
 
-      .hero {
-        min-height: 74vh;
-        display: grid;
-        align-content: center;
-        padding: 56px 0 44px;
-        border-bottom: 1px solid var(--line);
+      .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        padding: 24px 18px;
+        border-right: 1px solid var(--line);
+        background: #eef2ed;
+      }
+
+      .brand {
+        margin-bottom: 24px;
       }
 
       .eyebrow {
-        margin: 0 0 10px;
+        margin: 0 0 8px;
         color: var(--accent-dark);
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 800;
         text-transform: uppercase;
       }
 
-      h1 {
-        max-width: 850px;
+      .brand h1 {
         margin: 0;
-        font-size: clamp(42px, 7vw, 84px);
-        line-height: 0.98;
+        font-size: 24px;
+        line-height: 1.08;
+      }
+
+      .tab-list {
+        display: grid;
+        gap: 8px;
+      }
+
+      .tab-button {
+        width: 100%;
+        min-height: 40px;
+        padding: 0 10px;
+        border: 1px solid transparent;
+        border-radius: 6px;
+        background: transparent;
+        color: var(--muted);
+        font: inherit;
+        font-weight: 750;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .tab-button:hover {
+        color: var(--ink);
+        background: rgba(255, 255, 255, 0.65);
+      }
+
+      .tab-button.active {
+        border-color: var(--line);
+        background: var(--panel);
+        color: var(--accent-dark);
+      }
+
+      .side-links {
+        display: grid;
+        gap: 8px;
+        margin-top: 26px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+      }
+
+      .side-links a {
+        color: var(--accent-dark);
+        font-size: 14px;
+        font-weight: 750;
+        text-decoration: none;
+      }
+
+      .content {
+        width: min(1040px, calc(100vw - 320px));
+        padding: 38px 0 56px;
+        margin: 0 auto;
+      }
+
+      .tab-panel {
+        display: none;
+      }
+
+      .tab-panel.active {
+        display: block;
+      }
+
+      .hero {
+        min-height: 66vh;
+        display: grid;
+        align-content: center;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 34px;
+      }
+
+      h2 {
+        margin: 0 0 14px;
+        font-size: clamp(34px, 5vw, 68px);
+        line-height: 1;
+      }
+
+      h3 {
+        margin: 0 0 12px;
+        font-size: 26px;
+      }
+
+      h4 {
+        margin: 0 0 8px;
+        font-size: 18px;
+      }
+
+      p, li {
+        color: var(--muted);
+        line-height: 1.62;
       }
 
       .lede {
         max-width: 760px;
-        margin: 22px 0 0;
-        color: var(--muted);
+        margin: 20px 0 0;
         font-size: 20px;
-        line-height: 1.5;
       }
 
       .actions {
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
-        margin-top: 30px;
+        margin-top: 28px;
       }
 
-      a.button {
+      .button {
         display: inline-flex;
         align-items: center;
         min-height: 42px;
         padding: 0 14px;
+        border: 1px solid var(--accent);
         border-radius: 6px;
         background: var(--accent);
         color: white;
@@ -81,25 +175,15 @@
         text-decoration: none;
       }
 
-      a.button.secondary {
-        border: 1px solid var(--line);
+      .button.secondary {
+        border-color: var(--line);
         background: var(--panel);
         color: var(--ink);
       }
 
-      section {
-        padding: 34px 0;
+      section.block {
+        padding: 32px 0;
         border-bottom: 1px solid var(--line);
-      }
-
-      h2 {
-        margin: 0 0 14px;
-        font-size: 26px;
-      }
-
-      p, li {
-        color: var(--muted);
-        line-height: 1.6;
       }
 
       .grid {
@@ -108,17 +192,18 @@
         gap: 16px;
       }
 
+      .two-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
       .card {
-        min-height: 170px;
+        min-height: 154px;
         padding: 18px;
         border: 1px solid var(--line);
         border-radius: 8px;
         background: var(--panel);
-      }
-
-      .card h3 {
-        margin: 0 0 8px;
-        font-size: 18px;
       }
 
       .metric {
@@ -133,12 +218,42 @@
         font-weight: 800;
       }
 
+      .mock-browser {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+
+      .mock-bar {
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--line);
+        background: #eef2ed;
+        color: var(--muted);
+        font-size: 13px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      }
+
+      .mock-body {
+        padding: 18px;
+      }
+
+      .persona-row {
+        padding: 12px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .persona-row strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
       pre {
         overflow: auto;
         margin: 0;
         padding: 16px;
         border-radius: 8px;
-        background: #1d2522;
+        background: var(--code);
         color: #e8eee9;
         line-height: 1.5;
       }
@@ -147,111 +262,301 @@
         font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       }
 
+      .note {
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+
+      .note strong {
+        color: var(--ink);
+      }
+
       footer {
-        padding: 26px 0 42px;
+        padding: 28px 0 0;
         color: var(--muted);
         font-size: 14px;
       }
 
-      @media (max-width: 850px) {
-        main { width: min(100vw - 24px, 1120px); }
-        .hero { min-height: auto; }
-        .grid { grid-template-columns: 1fr; }
+      @media (max-width: 900px) {
+        .app {
+          display: block;
+        }
+
+        .sidebar {
+          position: static;
+          height: auto;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .tab-list {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .content {
+          width: min(100vw - 24px, 1040px);
+          padding-top: 24px;
+        }
+
+        .hero {
+          min-height: auto;
+        }
+
+        .grid,
+        .two-grid {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
   <body>
-    <main>
-      <section class="hero">
-        <p class="eyebrow">Portfolio project · retail personalization</p>
-        <h1>Behavior-aware ranking with RecSys Challenge 2025</h1>
-        <p class="lede">
-          A production-style ML/data engineering project that turns anonymized online-retailer event logs into user profiles,
-          personalized product rankings, and comparable recommendation experiments.
-        </p>
-        <div class="actions">
-          <a class="button" href="https://github.com/dansok/recsys-2025-personalization">View repository</a>
-          <a class="button secondary" href="#architecture">Architecture</a>
-          <a class="button secondary" href="#demo">Demo design</a>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <p class="eyebrow">Portfolio project</p>
+          <h1>RecSys 2025 Personalization</h1>
         </div>
-      </section>
-
-      <section>
-        <h2>Why RecSys 2025?</h2>
-        <p>
-          ESCI is excellent for general query-product relevance, but it does not contain user identities or preference
-          histories. RecSys Challenge 2025 is a better fit for personalization because it includes behavioral event streams:
-          purchases, add-to-cart, remove-from-cart, page visits, search queries, product attributes, and supervised targets.
-        </p>
-        <div>
-          <span class="metric">156M page visits</span>
-          <span class="metric">10.2M searches</span>
-          <span class="metric">5.7M add-to-cart</span>
-          <span class="metric">1.8M purchases</span>
-          <span class="metric">1.26M products</span>
+        <nav class="tab-list" aria-label="Project sections">
+          <button class="tab-button active" data-tab="landing">Overview</button>
+          <button class="tab-button" data-tab="search">Search Engine</button>
+          <button class="tab-button" data-tab="mlflow">MLflow</button>
+          <button class="tab-button" data-tab="clickhouse">ClickHouse</button>
+          <button class="tab-button" data-tab="architecture">Architecture</button>
+        </nav>
+        <div class="side-links">
+          <a href="https://github.com/dansok/recsys-2025-personalization">GitHub repository</a>
+          <a href="http://localhost:8010">Local search app</a>
+          <a href="http://localhost:5002">Local MLflow UI</a>
+          <a href="http://localhost:8124/play">Local ClickHouse UI</a>
         </div>
-      </section>
+      </aside>
 
-      <section id="architecture">
-        <h2>System Architecture</h2>
-        <div class="grid">
-          <div class="card">
-            <h3>Data layer</h3>
-            <p>Polars reads parquet event logs and target files. ClickHouse is the local analytical store for events, features, predictions, and evaluation runs.</p>
-          </div>
-          <div class="card">
-            <h3>Modeling layer</h3>
-            <p>Start with transparent personalized heuristics, then compare popularity, co-occurrence, BPR/matrix factorization, and gradient-boosted propensity rankers.</p>
-          </div>
-          <div class="card">
-            <h3>Serving layer</h3>
-            <p>FastAPI serves a local UI where a user can assume validation-set personas and see how ranking changes with inferred preferences.</p>
-          </div>
-        </div>
-      </section>
+      <main class="content">
+        <article id="landing" class="tab-panel active">
+          <section class="hero">
+            <p class="eyebrow">Behavior-aware retail ranking</p>
+            <h2>Learning user preferences from anonymized commerce events</h2>
+            <p class="lede">
+              This project turns the RecSys Challenge 2025 event stream into user profiles, personalized product rankings,
+              and a benchmark harness for from-scratch recommenders and production ML libraries.
+            </p>
+            <div class="actions">
+              <a class="button" href="https://github.com/dansok/recsys-2025-personalization">View repository</a>
+              <button class="button secondary tab-link" data-tab="search">Open search tab</button>
+            </div>
+          </section>
 
-      <section id="demo">
-        <h2>Interactive Demo</h2>
-        <p>
-          The local demo exposes anonymized validation users as human-readable roles such as
-          <strong>Decisive mid-price category hopper</strong>. Product names and queries are anonymized numeric-token
-          strings, so the UI supports filters like <code>category:6059</code>, <code>sku:1073042</code>, or encoded query tokens.
-        </p>
-        <pre><code>uvicorn recsys_personalization.api:app --reload --port 8010
-open http://localhost:8010</code></pre>
-      </section>
+          <section class="block">
+            <h3>Why This Dataset?</h3>
+            <p>
+              Unlike search relevance datasets that only judge query-product pairs, RecSys 2025 contains user behavior over
+              time: purchases, carts, removals, page visits, search queries, product metadata, and validation targets.
+              That makes it a better foundation for personalization and preference learning.
+            </p>
+            <div>
+              <span class="metric">156M page visits</span>
+              <span class="metric">10.2M searches</span>
+              <span class="metric">5.7M add-to-cart</span>
+              <span class="metric">1.8M purchases</span>
+              <span class="metric">1.26M products</span>
+            </div>
+          </section>
 
-      <section>
-        <h2>Evaluation Plan</h2>
-        <div class="grid">
-          <div class="card">
-            <h3>Ranking quality</h3>
-            <p>MAP@K and Recall@K over validation target products, plus category and price-bucket diagnostics.</p>
-          </div>
-          <div class="card">
-            <h3>Behavioral learning</h3>
-            <p>Compare static popularity against user-history-aware models to quantify personalization lift.</p>
-          </div>
-          <div class="card">
-            <h3>Engineering quality</h3>
-            <p>Track training time, inference latency, reproducibility, experiment artifacts, and local deployment boundaries.</p>
-          </div>
-        </div>
-      </section>
+          <section class="block">
+            <h3>What It Demonstrates</h3>
+            <div class="grid">
+              <div class="card">
+                <h4>Data engineering</h4>
+                <p>Polars pipelines, ClickHouse schemas, local Docker infra, reproducible dataset download, and feature artifacts.</p>
+              </div>
+              <div class="card">
+                <h4>ML engineering</h4>
+                <p>Experiment tracking, ranking metrics, model comparisons, artifact generation, and FastAPI serving.</p>
+              </div>
+              <div class="card">
+                <h4>Algorithmic depth</h4>
+                <p>A path to compare popularity, co-occurrence, BPR, matrix factorization, and boosted propensity rankers.</p>
+              </div>
+            </div>
+          </section>
+        </article>
 
-      <section>
-        <h2>What Is Production-Like?</h2>
-        <p>
-          The repo uses a package structure, Docker Compose, typed Python modules, Polars data processing, ClickHouse schemas,
-          MLflow-ready experiment tracking, FastAPI serving, pytest coverage, and GitHub Actions CI. The hosted page is static;
-          the data services run locally or on a separate deployment target.
-        </p>
-      </section>
+        <article id="search" class="tab-panel">
+          <section class="block">
+            <h3>Personalized Search Engine</h3>
+            <p>
+              The interactive local app lets you assume a validation-set user role, then reranks products using the selected
+              user's inferred category affinity, price profile, recent query tokens, and product interaction history.
+            </p>
+            <div class="actions">
+              <a class="button" href="http://localhost:8010">Open local FastAPI demo</a>
+              <a class="button secondary" href="https://github.com/dansok/recsys-2025-personalization/tree/main/frontend">View frontend source</a>
+            </div>
+          </section>
 
-      <footer>
-        Dataset: Synerise RecSys Challenge 2025. This project uses anonymized event data and does not expose raw product names or customer identities.
-      </footer>
-    </main>
+          <section class="block">
+            <div class="mock-browser">
+              <div class="mock-bar">http://localhost:8010 · Personalized retail search</div>
+              <div class="mock-body">
+                <div class="persona-row">
+                  <strong>Decisive mid-price category hopper</strong>
+                  <p>177 validation purchases, 28 categories, usually price bucket 39.7, strongest category 6059</p>
+                </div>
+                <div class="persona-row">
+                  <strong>Decisive value category loyalist</strong>
+                  <p>173 validation purchases, 14 categories, usually price bucket 5.7, strongest category 1966</p>
+                </div>
+                <div class="persona-row">
+                  <strong>Search input examples</strong>
+                  <p><code>category:6059</code>, <code>sku:1073042</code>, or anonymized numeric query tokens.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="block">
+            <h3>Run Locally</h3>
+            <pre><code>cd /Users/dsokolsky/PycharmProjects/recsys-2025-personalization
+.venv/bin/uvicorn recsys_personalization.api:app --reload --port 8010</code></pre>
+            <p class="note">
+              <strong>Hosted page limitation:</strong> GitHub Pages is static, so this tab links to the local FastAPI app.
+              A public live backend could be hosted separately on Render, Fly.io, Cloud Run, or similar.
+            </p>
+          </section>
+        </article>
+
+        <article id="mlflow" class="tab-panel">
+          <section class="block">
+            <h3>MLflow Experiment Tracking</h3>
+            <p>
+              MLflow is the experiment ledger for model comparisons: parameters, ranking metrics, artifacts, and model files.
+              The local stack exposes MLflow on port <code>5002</code>.
+            </p>
+            <div class="actions">
+              <a class="button" href="http://localhost:5002">Open local MLflow UI</a>
+              <a class="button secondary" href="https://dagshub.com/docs/integration_guide/mlflow_tracking/">Hosted MLflow option</a>
+            </div>
+          </section>
+
+          <section class="block">
+            <h3>Local Startup</h3>
+            <pre><code>docker compose up -d mlflow
+open http://localhost:5002</code></pre>
+          </section>
+
+          <section class="block">
+            <h3>Portfolio Hosting Recommendation</h3>
+            <p>
+              For a permanent public portfolio, use a static GitHub Pages demo plus DagsHub-hosted MLflow if you want public
+              experiment tracking. Keeping the MLflow server local avoids paying to keep infrastructure warm.
+            </p>
+          </section>
+        </article>
+
+        <article id="clickhouse" class="tab-panel">
+          <section class="block">
+            <h3>ClickHouse Analytical Store</h3>
+            <p>
+              ClickHouse stores event data, user features, predictions, and evaluation outputs in the local production-like
+              pipeline. It is intentionally local-first because the public demo does not need arbitrary database queries.
+            </p>
+            <div class="actions">
+              <a class="button" href="http://localhost:8124/play">Open local ClickHouse UI</a>
+              <a class="button secondary" href="https://clickhouse.com/docs">ClickHouse docs</a>
+            </div>
+          </section>
+
+          <section class="block">
+            <h3>Local Startup</h3>
+            <pre><code>docker compose up -d clickhouse
+.venv/bin/recsys schema apply
+open http://localhost:8124/play</code></pre>
+          </section>
+
+          <section class="block">
+            <h3>Why Not Host It Here?</h3>
+            <p>
+              GitHub Pages cannot run databases. A hosted ClickHouse service is useful for real analytics workloads, but for
+              a small portfolio demo it is simpler and more robust to publish static artifacts or use a tiny DuckDB/SQLite
+              backend elsewhere.
+            </p>
+          </section>
+        </article>
+
+        <article id="architecture" class="tab-panel">
+          <section class="block">
+            <h3>Architecture</h3>
+            <div class="grid">
+              <div class="card">
+                <h4>Raw data</h4>
+                <p>RecSys parquet event files and target labels are stored locally under <code>data/raw</code>.</p>
+              </div>
+              <div class="card">
+                <h4>Processing</h4>
+                <p>Polars builds user/item features and static demo artifacts from event history.</p>
+              </div>
+              <div class="card">
+                <h4>Storage</h4>
+                <p>ClickHouse is the analytical feature/evaluation store for local reproducible runs.</p>
+              </div>
+              <div class="card">
+                <h4>Tracking</h4>
+                <p>MLflow records model parameters, metrics, and artifacts for each experiment.</p>
+              </div>
+              <div class="card">
+                <h4>Serving</h4>
+                <p>FastAPI serves the local personalized search UI and ranking endpoints.</p>
+              </div>
+              <div class="card">
+                <h4>Publishing</h4>
+                <p>GitHub Pages hosts this static project hub and can later host precomputed demo JSON.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="block">
+            <h3>Roadmap</h3>
+            <div class="two-grid">
+              <div class="card">
+                <h4>From-scratch models</h4>
+                <p>Popularity, item-item co-occurrence, matrix factorization, and BPR trained/evaluated on validation targets.</p>
+              </div>
+              <div class="card">
+                <h4>Library baselines</h4>
+                <p>LightGBM propensity ranker and optional neural embedding models tracked through MLflow.</p>
+              </div>
+            </div>
+          </section>
+        </article>
+
+        <footer>
+          Dataset: Synerise RecSys Challenge 2025. The dataset anonymizes user identities, product names, and query text.
+        </footer>
+      </main>
+    </div>
+
+    <script>
+      const buttons = [...document.querySelectorAll(".tab-button, .tab-link")];
+      const panels = [...document.querySelectorAll(".tab-panel")];
+
+      function activate(tabId) {
+        panels.forEach((panel) => panel.classList.toggle("active", panel.id === tabId));
+        document.querySelectorAll(".tab-button").forEach((button) => {
+          button.classList.toggle("active", button.dataset.tab === tabId);
+        });
+        history.replaceState(null, "", `#${tabId}`);
+        window.scrollTo({ top: 0, behavior: "instant" });
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => activate(button.dataset.tab));
+      });
+
+      const initial = location.hash.replace("#", "");
+      if (initial && document.getElementById(initial)) activate(initial);
+    </script>
   </body>
 </html>
 
