@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RecSys 2025 Personalization Demo</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">RecSys 2025 Synerise</p>
+          <h1>Personalized retail search</h1>
+        </div>
+        <div id="health" class="pill">Checking API</div>
+      </header>
+
+      <section class="controls">
+        <label for="persona">Assume validation user</label>
+        <select id="persona"></select>
+
+        <label for="query">Search / filter</label>
+        <div class="search-row">
+          <input id="query" placeholder="Try: category:3398, sku:52586, or encoded tokens like 195 15 86" />
+          <button id="search">Search</button>
+        </div>
+        <p class="hint">
+          Product names and search queries are anonymized numeric-token strings. Personalization comes from the selected validation user's history, category affinity, and price profile.
+        </p>
+      </section>
+
+      <section class="layout">
+        <aside class="profile">
+          <h2>Role profile</h2>
+          <dl id="profile"></dl>
+        </aside>
+        <section class="results">
+          <div class="results-header">
+            <h2>Ranked products</h2>
+            <span id="latency"></span>
+          </div>
+          <div id="results"></div>
+        </section>
+      </section>
+    </main>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
+

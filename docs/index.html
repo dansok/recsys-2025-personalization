@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RecSys 2025 Behavioral Personalization</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f6f7f3;
+        --ink: #17201c;
+        --muted: #68746e;
+        --line: #d9dfd9;
+        --panel: #ffffff;
+        --accent: #087f78;
+        --accent-dark: #055f5a;
+        --soft: #e7f2ef;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      main {
+        width: min(1120px, calc(100vw - 40px));
+        margin: 0 auto;
+      }
+
+      .hero {
+        min-height: 74vh;
+        display: grid;
+        align-content: center;
+        padding: 56px 0 44px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .eyebrow {
+        margin: 0 0 10px;
+        color: var(--accent-dark);
+        font-size: 13px;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 850px;
+        margin: 0;
+        font-size: clamp(42px, 7vw, 84px);
+        line-height: 0.98;
+      }
+
+      .lede {
+        max-width: 760px;
+        margin: 22px 0 0;
+        color: var(--muted);
+        font-size: 20px;
+        line-height: 1.5;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 30px;
+      }
+
+      a.button {
+        display: inline-flex;
+        align-items: center;
+        min-height: 42px;
+        padding: 0 14px;
+        border-radius: 6px;
+        background: var(--accent);
+        color: white;
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      a.button.secondary {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        color: var(--ink);
+      }
+
+      section {
+        padding: 34px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      h2 {
+        margin: 0 0 14px;
+        font-size: 26px;
+      }
+
+      p, li {
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .card {
+        min-height: 170px;
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+
+      .card h3 {
+        margin: 0 0 8px;
+        font-size: 18px;
+      }
+
+      .metric {
+        display: inline-block;
+        margin: 4px 6px 4px 0;
+        padding: 6px 8px;
+        border-radius: 6px;
+        background: var(--soft);
+        color: var(--accent-dark);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      pre {
+        overflow: auto;
+        margin: 0;
+        padding: 16px;
+        border-radius: 8px;
+        background: #1d2522;
+        color: #e8eee9;
+        line-height: 1.5;
+      }
+
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      }
+
+      footer {
+        padding: 26px 0 42px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      @media (max-width: 850px) {
+        main { width: min(100vw - 24px, 1120px); }
+        .hero { min-height: auto; }
+        .grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="hero">
+        <p class="eyebrow">Portfolio project · retail personalization</p>
+        <h1>Behavior-aware ranking with RecSys Challenge 2025</h1>
+        <p class="lede">
+          A production-style ML/data engineering project that turns anonymized online-retailer event logs into user profiles,
+          personalized product rankings, and comparable recommendation experiments.
+        </p>
+        <div class="actions">
+          <a class="button" href="https://github.com/dansok/recsys-2025-personalization">View repository</a>
+          <a class="button secondary" href="#architecture">Architecture</a>
+          <a class="button secondary" href="#demo">Demo design</a>
+        </div>
+      </section>
+
+      <section>
+        <h2>Why RecSys 2025?</h2>
+        <p>
+          ESCI is excellent for general query-product relevance, but it does not contain user identities or preference
+          histories. RecSys Challenge 2025 is a better fit for personalization because it includes behavioral event streams:
+          purchases, add-to-cart, remove-from-cart, page visits, search queries, product attributes, and supervised targets.
+        </p>
+        <div>
+          <span class="metric">156M page visits</span>
+          <span class="metric">10.2M searches</span>
+          <span class="metric">5.7M add-to-cart</span>
+          <span class="metric">1.8M purchases</span>
+          <span class="metric">1.26M products</span>
+        </div>
+      </section>
+
+      <section id="architecture">
+        <h2>System Architecture</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Data layer</h3>
+            <p>Polars reads parquet event logs and target files. ClickHouse is the local analytical store for events, features, predictions, and evaluation runs.</p>
+          </div>
+          <div class="card">
+            <h3>Modeling layer</h3>
+            <p>Start with transparent personalized heuristics, then compare popularity, co-occurrence, BPR/matrix factorization, and gradient-boosted propensity rankers.</p>
+          </div>
+          <div class="card">
+            <h3>Serving layer</h3>
+            <p>FastAPI serves a local UI where a user can assume validation-set personas and see how ranking changes with inferred preferences.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="demo">
+        <h2>Interactive Demo</h2>
+        <p>
+          The local demo exposes anonymized validation users as human-readable roles such as
+          <strong>Decisive mid-price category hopper</strong>. Product names and queries are anonymized numeric-token
+          strings, so the UI supports filters like <code>category:6059</code>, <code>sku:1073042</code>, or encoded query tokens.
+        </p>
+        <pre><code>uvicorn recsys_personalization.api:app --reload --port 8010
+open http://localhost:8010</code></pre>
+      </section>
+
+      <section>
+        <h2>Evaluation Plan</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Ranking quality</h3>
+            <p>MAP@K and Recall@K over validation target products, plus category and price-bucket diagnostics.</p>
+          </div>
+          <div class="card">
+            <h3>Behavioral learning</h3>
+            <p>Compare static popularity against user-history-aware models to quantify personalization lift.</p>
+          </div>
+          <div class="card">
+            <h3>Engineering quality</h3>
+            <p>Track training time, inference latency, reproducibility, experiment artifacts, and local deployment boundaries.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>What Is Production-Like?</h2>
+        <p>
+          The repo uses a package structure, Docker Compose, typed Python modules, Polars data processing, ClickHouse schemas,
+          MLflow-ready experiment tracking, FastAPI serving, pytest coverage, and GitHub Actions CI. The hosted page is static;
+          the data services run locally or on a separate deployment target.
+        </p>
+      </section>
+
+      <footer>
+        Dataset: Synerise RecSys Challenge 2025. This project uses anonymized event data and does not expose raw product names or customer identities.
+      </footer>
+    </main>
+  </body>
+</html>
+

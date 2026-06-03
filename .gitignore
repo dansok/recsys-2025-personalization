@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+data/raw/
+data/processed/
+data/models/
+mlruns/
+clickhouse_data/
+clickhouse_logs/
+.env
+

@@ -1,0 +1,46 @@
+[project]
+name = "recsys-2025-personalization"
+version = "0.1.0"
+description = "Behavior-aware retail personalization and ranking with the RecSys Challenge 2025 Synerise dataset."
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+  "clickhouse-connect>=0.8.10",
+  "fastapi>=0.115.0",
+  "joblib>=1.4.2",
+  "lightgbm>=4.5.0",
+  "mlflow>=3.13.0",
+  "numpy>=2.4.0",
+  "polars>=1.41.0",
+  "pyarrow>=24.0.0",
+  "pydantic-settings>=2.6.0",
+  "python-dotenv>=1.0.1",
+  "scikit-learn>=1.9.0",
+  "typer>=0.12.5",
+  "uvicorn[standard]>=0.32.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3.3",
+  "ruff>=0.7.4",
+]
+
+[project.scripts]
+recsys = "recsys_personalization.cli:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/recsys_personalization"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+

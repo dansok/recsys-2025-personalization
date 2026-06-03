@@ -1,0 +1,48 @@
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.8
+    container_name: recsys2025-clickhouse
+    ports:
+      - "8124:8123"
+      - "9001:9000"
+    environment:
+      CLICKHOUSE_DB: recsys2025
+      CLICKHOUSE_USER: default
+      CLICKHOUSE_PASSWORD: ""
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "1"
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+      - clickhouse_logs:/var/log/clickhouse-server
+    healthcheck:
+      test: ["CMD", "clickhouse-client", "--query", "SELECT 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v3.13.0
+    container_name: recsys2025-mlflow
+    ports:
+      - "5002:5000"
+    command:
+      - mlflow
+      - server
+      - --host
+      - 0.0.0.0
+      - --port
+      - "5000"
+      - --backend-store-uri
+      - sqlite:////mlflow/mlflow.db
+      - --default-artifact-root
+      - mlflow-artifacts:/artifacts
+      - --serve-artifacts
+      - --artifacts-destination
+      - /mlflow/artifacts
+    volumes:
+      - mlflow_data:/mlflow
+
+volumes:
+  clickhouse_data:
+  clickhouse_logs:
+  mlflow_data:
+
