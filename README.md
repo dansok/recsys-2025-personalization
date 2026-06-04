@@ -31,6 +31,32 @@ The first MVP will compare:
 - LightGBM propensity ranker
 - optional neural user profile model
 
+Model implementations live under `src/recsys_personalization/models/`. The intent is to implement core recommenders from scratch, keep them importable and testable as library code, and benchmark them through shared training/evaluation harnesses.
+
+```text
+src/recsys_personalization/models/
+  popularity.py
+  item_nearest_neighbors.py
+  matrix_factorization.py
+  bayesian_personalized_ranking.py
+  alternating_least_squares.py
+  factorization_machine.py
+  lightgbm_ranker.py
+
+src/recsys_personalization/training/
+  train_popularity.py
+  train_item_nearest_neighbors.py
+  train_matrix_factorization.py
+  train_bayesian_personalized_ranking.py
+  train_alternating_least_squares.py
+  train_factorization_machine.py
+  train_lightgbm_ranker.py
+
+src/recsys_personalization/evaluation/
+  ranking.py
+  benchmark.py
+```
+
 Metrics:
 
 - MAP@K
